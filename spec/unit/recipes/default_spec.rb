@@ -35,8 +35,12 @@ describe 'mongo-server::default' do
       expect(chef_run).to install_package 'mongodb-org'
     end
 
-    it 'should update the mongod config' do
+    it 'should update the mongod service config' do
       expect(chef_run).to create_template '/lib/systemd/system/mongod.service'
+    end
+
+    it 'should update the mongod.config' do
+      expect(chef_run).to create_template '/etc/mongod.conf'
     end
 
     it 'should enable the mongod service' do

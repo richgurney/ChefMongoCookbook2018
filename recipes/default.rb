@@ -32,6 +32,13 @@ template '/lib/systemd/system/mongod.service' do
   group 'root'
 end
 
+template '/etc/mongod.conf' do
+  source 'mongod.conf.erb'
+  mode '0755'
+  owner 'root'
+  group 'root'
+end
+
 service 'mongod' do 
   supports status: true, restart: true, reload: true
   action [:enable, :start]
