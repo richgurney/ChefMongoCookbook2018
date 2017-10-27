@@ -1,7 +1,0 @@
-DEPENDENCIES
-  mongo-server
-    path: .
-    metadata: true
-
-GRAPH
-  mongo-server (0.3.1)
