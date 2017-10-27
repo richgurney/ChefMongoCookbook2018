@@ -19,28 +19,28 @@ describe 'mongo-server::default' do
       expect { chef_run }.to_not raise_error
     end
 
-    it 'should update the key server for mongo' do
-      expect(chef_run).to run_execute('apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927')
+    it 'updates all sources' do
+      expect(chef_run).to update_apt_update('update')
     end
 
-    it 'should create a sources file' do
-      expect(chef_run).to create_file('/etc/apt/sources.list.d/mongodb-org-3.2.list')
-    end
-
-    it 'should update the source for apt' do
-      expect(chef_run).to update_apt_update 'update'
+    it 'should add mongo to the sources list' do
+      expect(chef_run).to add_apt_repository('mongodb-org')  
     end
 
     it 'should install mongod' do
-      expect(chef_run).to install_package 'mongodb-org'
+      expect(chef_run).to upgrade_package 'mongodb-org'
     end
 
     it 'should update the mongod service config' do
-      expect(chef_run).to create_template '/lib/systemd/system/mongod.service'
+      expect(chef_run).to create_template('/lib/systemd/system/mongod.service').with(source: 'mongod.service.erb')
+      template = chef_run.template('/lib/systemd/system/mongod.service')
+      expect(template).to notify('service[mongod]')
     end
 
     it 'should update the mongod.config' do
       expect(chef_run).to create_template '/etc/mongod.conf'
+      template = chef_run.template('/etc/mongod.conf')
+      expect(template).to notify('service[mongod]')
     end
 
     it 'should enable the mongod service' do
@@ -50,6 +50,5 @@ describe 'mongo-server::default' do
     it 'should start the mongod service' do
       expect(chef_run).to start_service 'mongod'
     end
-
   end
 end
