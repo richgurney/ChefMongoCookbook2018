@@ -26,7 +26,7 @@
     {
       "type": "chef-solo",
       "cookbook_paths": ["./cookbooks"],
-      "run_list":["rails::default"]
+      "run_list":["mongo-server::default"]
     }
   ],
   "post-processors": [
