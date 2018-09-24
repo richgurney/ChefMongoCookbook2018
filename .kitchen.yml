@@ -14,10 +14,10 @@ verifier:
   name: inspec
 
 suites:
-    - name: default
-      run_list:
-        - recipe[mongo-server::default]
-      verifier:
-        inspec_tests:
-          - test/integration/default
-      attributes:
+  - name: default
+    run_list:
+      - recipe[mongo-server::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
