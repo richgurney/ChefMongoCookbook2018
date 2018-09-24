@@ -7,7 +7,7 @@ provisioner:
 
 platforms:
   - name: ubuntu-16.04
-    driver: 
+    driver:
        box: ubuntu/xenial64
 
 verifier:
@@ -19,5 +19,5 @@ suites:
         - recipe[mongo-server::default]
       verifier:
         inspec_tests:
-          - test/smoke/default
+          - test/integration/default
       attributes:
